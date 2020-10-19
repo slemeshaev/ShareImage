@@ -8,6 +8,21 @@
 import UIKit
 
 class LoginViewController: UIViewController {
+    
+    // создаем контейнер view для логотипа
+    let logoContainerView: UIView = {
+        let view = UIView()
+        let logoImageView = UIImageView(image: #imageLiteral(resourceName: "ShareImage_logo_white"))
+        logoImageView.contentMode = .scaleAspectFill
+        view.addSubview(logoImageView)
+        logoImageView.anchor(top: nil, left: nil, bottom: nil, right: nil,
+                             paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0,
+                             width: 200, height: 50)
+        logoImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        logoImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        view.backgroundColor = UIColor(red: 0/255, green: 120/255, blue: 175/255, alpha: 1)
+        return view
+    }()
 
     // создаем текстовое поле для email
     let emailTextField: UITextField = {
@@ -48,7 +63,12 @@ class LoginViewController: UIViewController {
         // цвет фона
         view.backgroundColor = .white
         
-        configureViewComponents()
+        view.addSubview(logoContainerView)
+        logoContainerView.anchor(top: view.topAnchor, left: view.leftAnchor,
+                                 bottom: nil, right: view.rightAnchor,
+                                 paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0,
+                                 width: 0, height: 150)
+        //configureViewComponents()
         
     }
     
