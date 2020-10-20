@@ -57,6 +57,15 @@ class LoginViewController: UIViewController {
         return button
     }()
     
+    // создаем кнопку для перехода регистрации
+    let dontHaveAccountButton: UIButton = {
+        let button = UIButton(type: .system)
+        let attributedTitle = NSMutableAttributedString(string: "У вас нет учетной записи?  ", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 14), NSAttributedString.Key.foregroundColor: UIColor.lightGray])
+        attributedTitle.append(NSAttributedString(string: "Войти", attributes: [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 14), NSAttributedString.Key.foregroundColor: UIColor(red: 17/255, green: 154/255, blue: 237/255, alpha: 1)]))
+        button.setAttributedTitle(attributedTitle, for: .normal)
+        return button
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -68,8 +77,11 @@ class LoginViewController: UIViewController {
                                  bottom: nil, right: view.rightAnchor,
                                  paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0,
                                  width: 0, height: 150)
-        //configureViewComponents()
-        
+        configureViewComponents()
+        view.addSubview(dontHaveAccountButton)
+        dontHaveAccountButton.anchor(top: nil, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor,
+                                     paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0,
+                                     width: 0, height: 50)
     }
     
     // метод конфигурации view-компонентов
@@ -82,7 +94,7 @@ class LoginViewController: UIViewController {
         stackView.distribution = .fillEqually
         
         view.addSubview(stackView)
-        stackView.anchor(top: view.topAnchor,
+        stackView.anchor(top: logoContainerView.bottomAnchor,
                          left: view.leftAnchor,
                          bottom: nil,
                          right: view.rightAnchor,
