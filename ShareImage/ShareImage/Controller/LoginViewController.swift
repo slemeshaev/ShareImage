@@ -62,16 +62,22 @@ class LoginViewController: UIViewController {
         let button = UIButton(type: .system)
         let attributedTitle = NSMutableAttributedString(string: "У вас нет учетной записи?  ", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 14), NSAttributedString.Key.foregroundColor: UIColor.lightGray])
         attributedTitle.append(NSAttributedString(string: "Войти", attributes: [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 14), NSAttributedString.Key.foregroundColor: UIColor(red: 17/255, green: 154/255, blue: 237/255, alpha: 1)]))
+        // добавление действия кнопке
+        button.addTarget(self, action: #selector(handleShowSignUp), for: .touchUpInside)
+        // установка атрибута для заголовка
         button.setAttributedTitle(attributedTitle, for: .normal)
         return button
     }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         // цвет фона
         view.backgroundColor = .white
         
+        // скрываем navigation bar
+        navigationController?.navigationBar.isHidden = true
+        
+        // добавляем logoContainerView на view
         view.addSubview(logoContainerView)
         logoContainerView.anchor(top: view.topAnchor, left: view.leftAnchor,
                                  bottom: nil, right: view.rightAnchor,
@@ -84,6 +90,12 @@ class LoginViewController: UIViewController {
                                      width: 0, height: 50)
     }
     
+    // метод перехода на экран регистрации
+    @objc func handleShowSignUp() {
+        let signUpVC = SignUpViewController()
+        navigationController?.pushViewController(signUpVC, animated: true)
+    }
+    
     // метод конфигурации view-компонентов
     private func configureViewComponents() {
         
@@ -94,16 +106,9 @@ class LoginViewController: UIViewController {
         stackView.distribution = .fillEqually
         
         view.addSubview(stackView)
-        stackView.anchor(top: logoContainerView.bottomAnchor,
-                         left: view.leftAnchor,
-                         bottom: nil,
-                         right: view.rightAnchor,
-                         paddingTop: 40,
-                         paddingLeft: 40,
-                         paddingBottom: 0,
-                         paddingRight: 40,
-                         width: 0,
-                         height: 140)
+        stackView.anchor(top: logoContainerView.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor,
+                         paddingTop: 40, paddingLeft: 40, paddingBottom: 0, paddingRight: 40,
+                         width: 0, height: 140)
     }
 
 }
