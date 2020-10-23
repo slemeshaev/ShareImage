@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Firebase
 
 class SignUpViewController: UIViewController {
 
@@ -23,6 +24,7 @@ class SignUpViewController: UIViewController {
         textField.backgroundColor = UIColor(white: 0, alpha: 0.03)
         textField.borderStyle = .roundedRect
         textField.font = UIFont.systemFont(ofSize: 14)
+        textField.addTarget(self, action: #selector(formValidation), for: .editingChanged)
         return textField
     }()
     
@@ -30,9 +32,11 @@ class SignUpViewController: UIViewController {
     let passwordTextField: UITextField = {
         let textField = UITextField()
         textField.placeholder = "Пароль"
+        textField.isSecureTextEntry = true
         textField.backgroundColor = UIColor(white: 0, alpha: 0.03)
         textField.borderStyle = .roundedRect
         textField.font = UIFont.systemFont(ofSize: 14)
+        textField.addTarget(self, action: #selector(formValidation), for: .editingChanged)
         return textField
     }()
     
@@ -66,6 +70,9 @@ class SignUpViewController: UIViewController {
                                          blue: 244/255,
                                          alpha: 1)
         button.layer.cornerRadius = 5
+        button.isEnabled = false
+        // добавление действия для кнопки
+        button.addTarget(self, action: #selector(handleSignUp), for: .touchUpInside)
         return button
     }()
     
@@ -100,9 +107,37 @@ class SignUpViewController: UIViewController {
                                         width: 0, height: 50)
     }
     
+    // метод действия для регистрации
+    @objc func handleSignUp() {
+        guard let email = emailTextField.text else { return }
+        guard let password = passwordTextField.text else { return }
+        
+        Auth.auth().createUser(withEmail: email, password: password) { (user, error) in
+            // обработка ошибки
+            if let error = error {
+                print("Failed to create user with error: \(error.localizedDescription)")
+            }
+            // успешное создание пользователя в firebase
+            print("Successfully created user with Firebase")
+        }
+
+    }
+    
     // метод перехода к контроллеру входа
     @objc func handleShowLogin() {
         _ = navigationController?.popViewController(animated: true)
+    }
+    
+    // проверка формы на валидность
+    @objc func formValidation() {
+        guard emailTextField.hasText, passwordTextField.hasText else {
+            signUpButton.isEnabled = false
+            signUpButton.backgroundColor = UIColor(red: 149/255, green: 204/255, blue: 244/255, alpha: 1)
+            return
+        }
+        
+        signUpButton.isEnabled = true
+        signUpButton.backgroundColor = UIColor(red: 17/255, green: 154/255, blue: 237/255, alpha: 1)
     }
     
     // метод конфигурации view-компонентов
