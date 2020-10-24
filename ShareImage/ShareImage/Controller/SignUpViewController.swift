@@ -120,48 +120,56 @@ class SignUpViewController: UIViewController {
         guard let password = passwordTextField.text else { return }
         guard let fullName = fullNameTextField.text else { return }
         guard let nickname = nickNameTextField.text else { return }
+        // set Profile image
+        guard let profileImage = self.plusPhotoButton.imageView?.image else { return }
+        
+        // place image in firebase storage
+        let profileImageUID = NSUUID().uuidString
+        
+        // create an instance of the Storage to store
+        let storageRef = Storage.storage().reference().child("profile_images").child(profileImageUID)
+        
+        // convert selected image to jpeg since Firebase only accept that
+        guard let uploadData = profileImage.jpegData(compressionQuality: 0.3) else { return }
         
         Auth.auth().createUser(withEmail: email, password: password) { (user, error) in
             // обработка ошибки
             if let error = error {
                 print("Failed to create user with error: \(error.localizedDescription)")
+                return
             }
             
-            // set profile image
-            guard let profileImg = self.plusPhotoButton.imageView?.image else { return }
-            
-            // upload data
-            guard let uploadData = profileImg.jpegData(compressionQuality: 0.3) else { return }
-            
-            // place image in firebase storage
-            let filename = NSUUID().uuidString
-            
-            Storage.storage().reference().child("profile_images").child(filename).putData(uploadData, metadata: nil, completion: { (metadata, error) in
-                
-                // handle error
+            // upload image to storage
+            storageRef.putData(uploadData, metadata: nil) {(metaData, error) in
                 if let error = error {
-                    print("Failed to upload image to Firebase Storage with error: \(error.localizedDescription)")
+                    print(error.localizedDescription)
+                    return
+                }
+                // download the imageURL string
+                storageRef.downloadURL { (imageUrl, error) in
+                    // profile image url
+                    guard let profileImageURL = imageUrl?.absoluteString else { return }
+                    
+                    // user id
+                    guard let uid = user?.user.uid else { return }
+                    
+                    let dictionaryValues = ["photo UID": profileImageUID,
+                                            "profileImageUrl": profileImageURL,
+                                            "email": email,
+                                            "password": password,
+                                            "fullname": fullName,
+                                            "nickname": nickname]
+                    
+                    let values = [uid: dictionaryValues]
+                    
+                    // save user info to database
+                    Database.database().reference().child("users").updateChildValues(values) { (error, ref) in
+                        print("Пользователь создан!")
+                    }
                 }
                 
-                // profile image url
-                guard let profileImageURL = metadata?.downloadURL()?.absoluteString else { return }
-                
-                // user id
-                guard let uid = user?.user.uid else { return }
-                
-                let dictionaryValues = ["name": fullName,
-                                        "nickname": nickname,
-                                        "profileImageUrl": profileImageURL]
-                
-                let values = [uid: dictionaryValues]
-                
-                // save user info to database
-                Database.database().reference().child("users").updateChildValues(values, withCompletionBlock: { (error, ref) in
-                    print("Successfully created user and saved information to database")
-                })
-            })
+            }
         }
-
     }
     
     // метод перехода к контроллеру входа
