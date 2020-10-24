@@ -9,11 +9,15 @@ import UIKit
 import Firebase
 
 class SignUpViewController: UIViewController {
+    
+    var imageSelected = false
 
     // создаем кнопку для добавления фото в профиль
     let plusPhotoButton: UIButton = {
         let button = UIButton(type: .system)
         button.setImage(#imageLiteral(resourceName: "plus_button").withRenderingMode(.alwaysOriginal), for: .normal)
+        // добавление действия для кнопки
+        button.addTarget(self, action: #selector(handleSelectProfilePhoto), for: .touchUpInside)
         return button
     }()
     
@@ -47,6 +51,7 @@ class SignUpViewController: UIViewController {
         textField.backgroundColor = UIColor(white: 0, alpha: 0.03)
         textField.borderStyle = .roundedRect
         textField.font = UIFont.systemFont(ofSize: 14)
+        textField.addTarget(self, action: #selector(formValidation), for: .editingChanged)
         return textField
     }()
     
@@ -57,6 +62,7 @@ class SignUpViewController: UIViewController {
         textField.backgroundColor = UIColor(white: 0, alpha: 0.03)
         textField.borderStyle = .roundedRect
         textField.font = UIFont.systemFont(ofSize: 14)
+        textField.addTarget(self, action: #selector(formValidation), for: .editingChanged)
         return textField
     }()
     
@@ -109,18 +115,61 @@ class SignUpViewController: UIViewController {
     
     // метод действия для регистрации
     @objc func handleSignUp() {
+        // properties
         guard let email = emailTextField.text else { return }
         guard let password = passwordTextField.text else { return }
+        guard let fullName = fullNameTextField.text else { return }
+        guard let nickname = nickNameTextField.text else { return }
+        // set Profile image
+        guard let profileImage = self.plusPhotoButton.imageView?.image else { return }
+        
+        // place image in firebase storage
+        let profileImageUID = NSUUID().uuidString
+        
+        // create an instance of the Storage to store
+        let storageRef = Storage.storage().reference().child("profile_images").child(profileImageUID)
+        
+        // convert selected image to jpeg since Firebase only accept that
+        guard let uploadData = profileImage.jpegData(compressionQuality: 0.3) else { return }
         
         Auth.auth().createUser(withEmail: email, password: password) { (user, error) in
             // обработка ошибки
             if let error = error {
                 print("Failed to create user with error: \(error.localizedDescription)")
+                return
             }
-            // успешное создание пользователя в firebase
-            print("Successfully created user with Firebase")
+            
+            // upload image to storage
+            storageRef.putData(uploadData, metadata: nil) {(metaData, error) in
+                if let error = error {
+                    print(error.localizedDescription)
+                    return
+                }
+                // download the imageURL string
+                storageRef.downloadURL { (imageUrl, error) in
+                    // profile image url
+                    guard let profileImageURL = imageUrl?.absoluteString else { return }
+                    
+                    // user id
+                    guard let uid = user?.user.uid else { return }
+                    
+                    let dictionaryValues = ["photo UID": profileImageUID,
+                                            "profileImageUrl": profileImageURL,
+                                            "email": email,
+                                            "password": password,
+                                            "fullname": fullName,
+                                            "nickname": nickname]
+                    
+                    let values = [uid: dictionaryValues]
+                    
+                    // save user info to database
+                    Database.database().reference().child("users").updateChildValues(values) { (error, ref) in
+                        print("Пользователь создан!")
+                    }
+                }
+                
+            }
         }
-
     }
     
     // метод перехода к контроллеру входа
@@ -130,7 +179,11 @@ class SignUpViewController: UIViewController {
     
     // проверка формы на валидность
     @objc func formValidation() {
-        guard emailTextField.hasText, passwordTextField.hasText else {
+        guard emailTextField.hasText,
+              passwordTextField.hasText,
+              fullNameTextField.hasText,
+              nickNameTextField.hasText,
+              imageSelected == true else {
             signUpButton.isEnabled = false
             signUpButton.backgroundColor = UIColor(red: 149/255, green: 204/255, blue: 244/255, alpha: 1)
             return
@@ -156,4 +209,40 @@ class SignUpViewController: UIViewController {
                          width: 0, height: 240)
     }
 
+}
+
+// MARK: - UIImagePickerControllerDelegate, UINavigationControllerDelegate
+extension SignUpViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        // selected image
+        guard let profileImage = info[UIImagePickerController.InfoKey.editedImage] as? UIImage else {
+            imageSelected = false
+            return
+        }
+        
+        // set imageSelected to true
+        imageSelected = true
+        
+        // configure plusPhotoButton with selected image
+        plusPhotoButton.layer.cornerRadius = plusPhotoButton.frame.width / 2
+        plusPhotoButton.layer.masksToBounds = true
+        plusPhotoButton.layer.borderColor = UIColor.lightGray.cgColor
+        plusPhotoButton.layer.borderWidth = 2
+        plusPhotoButton.setImage(profileImage.withRenderingMode(.alwaysOriginal), for: .normal)
+        
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    @objc func handleSelectProfilePhoto() {
+        // configure image picker
+        let imagePicker = UIImagePickerController()
+        imagePicker.delegate = self
+        imagePicker.allowsEditing = true
+        
+        // present image picker
+        self.present(imagePicker, animated: true, completion: nil)
+        
+    }
+    
 }
