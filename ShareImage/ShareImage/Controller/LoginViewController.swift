@@ -31,6 +31,7 @@ class LoginViewController: UIViewController {
         textField.backgroundColor = UIColor(white: 0, alpha: 0.03)
         textField.borderStyle = .roundedRect
         textField.font = UIFont.systemFont(ofSize: 14)
+        textField.addTarget(self, action: #selector(formValidation), for: .editingChanged)
         return textField
     }()
     
@@ -41,6 +42,8 @@ class LoginViewController: UIViewController {
         textField.backgroundColor = UIColor(white: 0, alpha: 0.03)
         textField.borderStyle = .roundedRect
         textField.font = UIFont.systemFont(ofSize: 14)
+        textField.isSecureTextEntry = true
+        textField.addTarget(self, action: #selector(formValidation), for: .editingChanged)
         return textField
     }()
     
@@ -53,6 +56,9 @@ class LoginViewController: UIViewController {
                                          green: 204/255,
                                          blue: 244/255,
                                          alpha: 1)
+        // добавляем действие для кнопки
+        button.addTarget(self, action: #selector(handleSignIn), for: .touchUpInside)
+        // радиус для кнопки
         button.layer.cornerRadius = 5
         return button
     }()
@@ -94,6 +100,24 @@ class LoginViewController: UIViewController {
     @objc func handleShowSignUp() {
         let signUpVC = SignUpViewController()
         navigationController?.pushViewController(signUpVC, animated: true)
+    }
+    
+    // метод действия для входа
+    @objc func handleSignIn() {
+        print("Handle sign in ....")
+    }
+    
+    // проверка формы на валидность
+    @objc func formValidation() {
+        // гарантирует, что поля почты и пароля содержат текст
+        guard emailTextField.hasText, passwordTextField.hasText else {
+            signInButton.isEnabled = false
+            signInButton.backgroundColor = UIColor(red: 149/255, green: 204/255, blue: 244/255, alpha: 1)
+            return
+        }
+        // условия были выполнены
+        signInButton.isEnabled = true
+        signInButton.backgroundColor = UIColor(red: 17/255, green: 154/255, blue: 237/255, alpha: 1)
     }
     
     // метод конфигурации view-компонентов
