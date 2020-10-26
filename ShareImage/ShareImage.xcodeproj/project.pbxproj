@@ -10,6 +10,12 @@
 		634A8D1303AD58940612BF32 /* Pods_ShareImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5EB58B3267C1411FE6DA2B94 /* Pods_ShareImage.framework */; };
 		66227CFA254353DC0037E96A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 66227CF9254353DC0037E96A /* GoogleService-Info.plist */; };
 		662ED1BC253F51850004167F /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 662ED1BB253F51850004167F /* SignUpViewController.swift */; };
+		66B9C33A25473B96009ECECC /* MainTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B9C33925473B96009ECECC /* MainTabViewController.swift */; };
+		66B9C33D2547458B009ECECC /* FeedCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B9C33C2547458B009ECECC /* FeedCollectionViewController.swift */; };
+		66B9C340254745C8009ECECC /* SearchTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B9C33F254745C8009ECECC /* SearchTableViewController.swift */; };
+		66B9C34325474619009ECECC /* UploadPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B9C34225474619009ECECC /* UploadPostViewController.swift */; };
+		66B9C34625474659009ECECC /* NotificationTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B9C34525474659009ECECC /* NotificationTableViewController.swift */; };
+		66B9C34925474695009ECECC /* UserProfileCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B9C34825474695009ECECC /* UserProfileCollectionViewController.swift */; };
 		66FA5466253C29530074C1E7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66FA5465253C29530074C1E7 /* AppDelegate.swift */; };
 		66FA5468253C29530074C1E7 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66FA5467253C29530074C1E7 /* SceneDelegate.swift */; };
 		66FA546D253C29530074C1E7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66FA546B253C29530074C1E7 /* Main.storyboard */; };
@@ -24,6 +30,12 @@
 		5EB58B3267C1411FE6DA2B94 /* Pods_ShareImage.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ShareImage.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		66227CF9254353DC0037E96A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		662ED1BB253F51850004167F /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
+		66B9C33925473B96009ECECC /* MainTabViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabViewController.swift; sourceTree = "<group>"; };
+		66B9C33C2547458B009ECECC /* FeedCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedCollectionViewController.swift; sourceTree = "<group>"; };
+		66B9C33F254745C8009ECECC /* SearchTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTableViewController.swift; sourceTree = "<group>"; };
+		66B9C34225474619009ECECC /* UploadPostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadPostViewController.swift; sourceTree = "<group>"; };
+		66B9C34525474659009ECECC /* NotificationTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationTableViewController.swift; sourceTree = "<group>"; };
+		66B9C34825474695009ECECC /* UserProfileCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileCollectionViewController.swift; sourceTree = "<group>"; };
 		66FA5462253C29530074C1E7 /* ShareImage.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ShareImage.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		66FA5465253C29530074C1E7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		66FA5467253C29530074C1E7 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -105,6 +117,12 @@
 			isa = PBXGroup;
 			children = (
 				66FA547F253C2B4C0074C1E7 /* LoginViewController.swift */,
+				66B9C33925473B96009ECECC /* MainTabViewController.swift */,
+				66B9C33C2547458B009ECECC /* FeedCollectionViewController.swift */,
+				66B9C33F254745C8009ECECC /* SearchTableViewController.swift */,
+				66B9C34225474619009ECECC /* UploadPostViewController.swift */,
+				66B9C34525474659009ECECC /* NotificationTableViewController.swift */,
+				66B9C34825474695009ECECC /* UserProfileCollectionViewController.swift */,
 				662ED1BB253F51850004167F /* SignUpViewController.swift */,
 			);
 			path = Controller;
@@ -247,11 +265,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				66B9C34625474659009ECECC /* NotificationTableViewController.swift in Sources */,
 				66FA5480253C2B4C0074C1E7 /* LoginViewController.swift in Sources */,
 				66FA5466253C29530074C1E7 /* AppDelegate.swift in Sources */,
 				66FA5468253C29530074C1E7 /* SceneDelegate.swift in Sources */,
 				66FA5484253C3C610074C1E7 /* Extensions.swift in Sources */,
+				66B9C33D2547458B009ECECC /* FeedCollectionViewController.swift in Sources */,
+				66B9C34925474695009ECECC /* UserProfileCollectionViewController.swift in Sources */,
 				662ED1BC253F51850004167F /* SignUpViewController.swift in Sources */,
+				66B9C34325474619009ECECC /* UploadPostViewController.swift in Sources */,
+				66B9C33A25473B96009ECECC /* MainTabViewController.swift in Sources */,
+				66B9C340254745C8009ECECC /* SearchTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Firebase
 
 class LoginViewController: UIViewController {
     
@@ -58,6 +59,7 @@ class LoginViewController: UIViewController {
                                          alpha: 1)
         // добавляем действие для кнопки
         button.addTarget(self, action: #selector(handleSignIn), for: .touchUpInside)
+        button.isEnabled = false
         // радиус для кнопки
         button.layer.cornerRadius = 5
         return button
@@ -104,7 +106,25 @@ class LoginViewController: UIViewController {
     
     // метод действия для входа
     @objc func handleSignIn() {
-        print("Handle sign in ....")
+        // настройки
+        guard let email = emailTextField.text,
+              let password = passwordTextField.text else { return }
+        // sign user in with email and password
+        Auth.auth().signIn(withEmail: email, password: password) { (user, error) in
+            
+            // обработка ошибки
+            if let error = error {
+                print("Невозможно войти в систему с ошибкой \(error.localizedDescription)")
+                return
+            }
+            // обработка успшеного входа
+            print("Успешно вошедший пользователь!")
+            
+            let mainTabVC = MainTabViewController()
+            mainTabVC.modalPresentationStyle = .fullScreen
+            self.present(mainTabVC, animated: true, completion: nil)
+            
+        }
     }
     
     // проверка формы на валидность
