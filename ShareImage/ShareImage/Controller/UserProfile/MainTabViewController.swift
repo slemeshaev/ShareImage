@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Firebase
 
 class MainTabViewController: UITabBarController, UITabBarControllerDelegate {
 
@@ -17,6 +18,9 @@ class MainTabViewController: UITabBarController, UITabBarControllerDelegate {
         
         // configure view controllers
         configureViewControllers()
+        
+        // user validation
+        checkInUserIsLoggedIn()
     }
     
     // функция для создания контроллера представления
@@ -53,6 +57,18 @@ class MainTabViewController: UITabBarController, UITabBarControllerDelegate {
         
         // возвращаем navigation controller
         return navigationController
+    }
+    
+    // проверка пользователя на залогининность
+    func checkInUserIsLoggedIn() {
+        
+        if Auth.auth().currentUser == nil {
+            print("No current user...")
+        }
+        else {
+            print("User is logged in...")
+        }
+        
     }
 
 }
