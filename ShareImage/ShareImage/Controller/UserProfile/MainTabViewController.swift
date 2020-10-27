@@ -61,14 +61,16 @@ class MainTabViewController: UITabBarController, UITabBarControllerDelegate {
     
     // проверка пользователя на залогининность
     func checkInUserIsLoggedIn() {
-        
         if Auth.auth().currentUser == nil {
-            print("No current user...")
+            DispatchQueue.main.async {
+                // представление login controller
+                let loginViewController = LoginViewController()
+                let navigationController = UINavigationController(rootViewController: loginViewController)
+                navigationController.modalPresentationStyle = .fullScreen
+                self.present(navigationController, animated: true, completion: nil)
+            }
+            return
         }
-        else {
-            print("User is logged in...")
-        }
-        
     }
 
 }

@@ -77,6 +77,56 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		6684820F254866A600B63D17 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				66FA547F253C2B4C0074C1E7 /* LoginViewController.swift */,
+				662ED1BB253F51850004167F /* SignUpViewController.swift */,
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
+		66848210254866D500B63D17 /* Feed */ = {
+			isa = PBXGroup;
+			children = (
+				66B9C33C2547458B009ECECC /* FeedCollectionViewController.swift */,
+			);
+			path = Feed;
+			sourceTree = "<group>";
+		};
+		66848211254866E300B63D17 /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				66B9C33F254745C8009ECECC /* SearchTableViewController.swift */,
+			);
+			path = Search;
+			sourceTree = "<group>";
+		};
+		66848212254866F100B63D17 /* UploadPost */ = {
+			isa = PBXGroup;
+			children = (
+				66B9C34225474619009ECECC /* UploadPostViewController.swift */,
+			);
+			path = UploadPost;
+			sourceTree = "<group>";
+		};
+		668482132548670200B63D17 /* Notifications */ = {
+			isa = PBXGroup;
+			children = (
+				66B9C34525474659009ECECC /* NotificationTableViewController.swift */,
+			);
+			path = Notifications;
+			sourceTree = "<group>";
+		};
+		668482142548671700B63D17 /* UserProfile */ = {
+			isa = PBXGroup;
+			children = (
+				66B9C34825474695009ECECC /* UserProfileCollectionViewController.swift */,
+				66B9C33925473B96009ECECC /* MainTabViewController.swift */,
+			);
+			path = UserProfile;
+			sourceTree = "<group>";
+		};
 		66FA5459253C29530074C1E7 = {
 			isa = PBXGroup;
 			children = (
@@ -98,12 +148,12 @@
 		66FA5464253C29530074C1E7 /* ShareImage */ = {
 			isa = PBXGroup;
 			children = (
+				66FA5465253C29530074C1E7 /* AppDelegate.swift */,
+				66FA5467253C29530074C1E7 /* SceneDelegate.swift */,
 				66FA547C253C29AB0074C1E7 /* Model */,
 				66FA547B253C29A40074C1E7 /* View */,
 				66FA547A253C299D0074C1E7 /* Controller */,
 				66FA5482253C3C430074C1E7 /* Helpers */,
-				66FA5465253C29530074C1E7 /* AppDelegate.swift */,
-				66FA5467253C29530074C1E7 /* SceneDelegate.swift */,
 				66FA546B253C29530074C1E7 /* Main.storyboard */,
 				66FA546E253C29530074C1E7 /* Assets.xcassets */,
 				66FA5470253C29530074C1E7 /* LaunchScreen.storyboard */,
@@ -116,14 +166,12 @@
 		66FA547A253C299D0074C1E7 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				66FA547F253C2B4C0074C1E7 /* LoginViewController.swift */,
-				66B9C33925473B96009ECECC /* MainTabViewController.swift */,
-				66B9C33C2547458B009ECECC /* FeedCollectionViewController.swift */,
-				66B9C33F254745C8009ECECC /* SearchTableViewController.swift */,
-				66B9C34225474619009ECECC /* UploadPostViewController.swift */,
-				66B9C34525474659009ECECC /* NotificationTableViewController.swift */,
-				66B9C34825474695009ECECC /* UserProfileCollectionViewController.swift */,
-				662ED1BB253F51850004167F /* SignUpViewController.swift */,
+				668482142548671700B63D17 /* UserProfile */,
+				668482132548670200B63D17 /* Notifications */,
+				66848212254866F100B63D17 /* UploadPost */,
+				66848211254866E300B63D17 /* Search */,
+				66848210254866D500B63D17 /* Feed */,
+				6684820F254866A600B63D17 /* Login */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
