@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Firebase
 
 class MainTabViewController: UITabBarController, UITabBarControllerDelegate {
 
@@ -17,6 +18,9 @@ class MainTabViewController: UITabBarController, UITabBarControllerDelegate {
         
         // configure view controllers
         configureViewControllers()
+        
+        // user validation
+        checkInUserIsLoggedIn()
     }
     
     // функция для создания контроллера представления
@@ -53,6 +57,20 @@ class MainTabViewController: UITabBarController, UITabBarControllerDelegate {
         
         // возвращаем navigation controller
         return navigationController
+    }
+    
+    // проверка пользователя на залогининность
+    func checkInUserIsLoggedIn() {
+        if Auth.auth().currentUser == nil {
+            DispatchQueue.main.async {
+                // представление login controller
+                let loginViewController = LoginViewController()
+                let navigationController = UINavigationController(rootViewController: loginViewController)
+                navigationController.modalPresentationStyle = .fullScreen
+                self.present(navigationController, animated: true, completion: nil)
+            }
+            return
+        }
     }
 
 }

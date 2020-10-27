@@ -120,10 +120,12 @@ class LoginViewController: UIViewController {
             // обработка успшеного входа
             print("Успешно вошедший пользователь!")
             
-            let mainTabVC = MainTabViewController()
-            mainTabVC.modalPresentationStyle = .fullScreen
-            self.present(mainTabVC, animated: true, completion: nil)
+            guard let mainTabVC = UIApplication.shared.keyWindowInConnectedScenes?.rootViewController as? MainTabViewController else { return }
+            // настройка контроллеров представления в maintabvc
+            mainTabVC.configureViewControllers()
             
+            // dismiss login controller
+            self.dismiss(animated: true, completion: nil)
         }
     }
     
