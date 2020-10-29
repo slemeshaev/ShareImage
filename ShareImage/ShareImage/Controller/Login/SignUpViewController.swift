@@ -56,7 +56,7 @@ class SignUpViewController: UIViewController {
     }()
     
     // создаем текстовое поле для псевдонима пользователя
-    let nickNameTextField: UITextField = {
+    let usernameTextField: UITextField = {
         let textField = UITextField()
         textField.placeholder = "Псевдоним пользователя"
         textField.backgroundColor = UIColor(white: 0, alpha: 0.03)
@@ -119,7 +119,7 @@ class SignUpViewController: UIViewController {
         guard let email = emailTextField.text else { return }
         guard let password = passwordTextField.text else { return }
         guard let fullName = fullNameTextField.text else { return }
-        guard let nickname = nickNameTextField.text else { return }
+        guard let username = usernameTextField.text else { return }
         // set Profile image
         guard let profileImage = self.plusPhotoButton.imageView?.image else { return }
         
@@ -158,7 +158,7 @@ class SignUpViewController: UIViewController {
                                             "email": email,
                                             "password": password,
                                             "fullname": fullName,
-                                            "nickname": nickname]
+                                            "username": username]
                     
                     let values = [uid: dictionaryValues]
                     
@@ -182,7 +182,7 @@ class SignUpViewController: UIViewController {
         guard emailTextField.hasText,
               passwordTextField.hasText,
               fullNameTextField.hasText,
-              nickNameTextField.hasText,
+              usernameTextField.hasText,
               imageSelected == true else {
             signUpButton.isEnabled = false
             signUpButton.backgroundColor = UIColor(red: 149/255, green: 204/255, blue: 244/255, alpha: 1)
@@ -197,7 +197,7 @@ class SignUpViewController: UIViewController {
     private func configureViewComponents() {
         
         let stackView = UIStackView(arrangedSubviews: [emailTextField, passwordTextField,
-                                                       fullNameTextField, nickNameTextField, signUpButton])
+                                                       fullNameTextField, usernameTextField, signUpButton])
         
         stackView.axis = .vertical
         stackView.spacing = 10

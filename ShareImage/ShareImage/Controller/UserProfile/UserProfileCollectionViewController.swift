@@ -14,6 +14,7 @@ private let headerIdentifier = "UserProfileHeader"
 class UserProfileCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
 
     // MARK: - Свойства
+    var user: User?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,6 +50,16 @@ class UserProfileCollectionViewController: UICollectionViewController, UICollect
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         // объявление header
         let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: headerIdentifier, for: indexPath) as! UserProfileHeader
+        // установка значений пользователя в заголовке
+        let currentUid = Auth.auth().currentUser?.uid
+        Database.database().reference().child("users").child(currentUid!).observeSingleEvent(of: .value) { (snapshot) in
+            guard let dictionary = snapshot.value as? Dictionary<String, AnyObject> else { return }
+            let uid = snapshot.key
+            let user = User(uid: uid, dictionary: dictionary)
+            self.navigationItem.title = user.username
+            header.user = user
+            print(user.name)
+        }
         // возращение заголовка
         return header
     }
@@ -63,11 +74,8 @@ class UserProfileCollectionViewController: UICollectionViewController, UICollect
 
     // MARK: - API
     func fetchCurrentUserData() {
-        guard let currentUid = Auth.auth().currentUser?.uid else { return }
-        Database.database().reference().child("users").child(currentUid).child("nickname").observeSingleEvent(of: .value) { (snapshot) in
-            guard let nickname = snapshot.value as? String else { return }
-            self.navigationItem.title = nickname
-        }
+        //
+        
     }
 
 

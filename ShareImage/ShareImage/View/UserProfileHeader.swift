@@ -9,6 +9,13 @@ import UIKit
 
 class UserProfileHeader: UICollectionViewCell {
     
+    var user: User? {
+        didSet {
+            let fullName = user?.name
+            nameLabel.text = fullName
+        }
+    }
+    
     // аватарка пользователя
     let profileImageView: UIImageView = {
         let imageView = UIImageView()
@@ -18,10 +25,9 @@ class UserProfileHeader: UICollectionViewCell {
         return imageView
     }()
     
-    // nickname пользователя
+    // username пользователя
     let nameLabel: UILabel = {
         let label = UILabel()
-        label.text = "Станислав Лемешаев"
         label.font = UIFont.boldSystemFont(ofSize: 12)
         return label
     }()
