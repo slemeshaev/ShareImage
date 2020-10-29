@@ -58,7 +58,6 @@ class UserProfileCollectionViewController: UICollectionViewController, UICollect
             let user = User(uid: uid, dictionary: dictionary)
             self.navigationItem.title = user.username
             header.user = user
-            print(user.name)
         }
         // возращение заголовка
         return header

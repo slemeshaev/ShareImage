@@ -19,7 +19,7 @@ class User {
             self.username = username
         }
         
-        if let name = dictionary["name"] as? String {
+        if let name = dictionary["fullname"] as? String {
             self.name = name
         }
         
