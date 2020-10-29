@@ -143,11 +143,11 @@ class UserProfileHeader: UICollectionViewCell {
     func configureUserStats() {
         let stackView = UIStackView(arrangedSubviews: [postsLabel, followersLabel, followingLabel])
         stackView.axis = .horizontal
-        //stackView.spacing = 5
-        stackView.distribution = .fillEqually
+        //stackView.spacing = 15
+        stackView.distribution = .equalSpacing
         addSubview(stackView)
         stackView.anchor(top: self.topAnchor, left: profileImageView.rightAnchor, bottom: nil, right: rightAnchor,
-                         paddingTop: 12, paddingLeft: 12, paddingBottom: 0, paddingRight: 10,
+                         paddingTop: 12, paddingLeft: 10, paddingBottom: 0, paddingRight: 12,
                          width: 0, height: 50)
     }
     
