@@ -10,6 +10,18 @@ import UIKit
 class SearchUserCell: UITableViewCell {
     
     // MARK: - Настройки
+    var user: User? {
+        didSet {
+            guard let profileImageUrl = user?.profileImageUrl else { return }
+            guard let username = user?.username else { return }
+            guard let fullname = user?.name else { return }
+            
+            profileImageView.loadImage(with: profileImageUrl)
+            self.textLabel?.text = username
+            self.detailTextLabel?.text = fullname
+        }
+    }
+    
     // аватарка пользователя
     let profileImageView: UIImageView = {
         let imageView = UIImageView()
