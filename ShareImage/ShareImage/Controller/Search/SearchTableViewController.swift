@@ -47,7 +47,12 @@ class SearchTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let user = users[indexPath.row]
-        print("Username is \(user.username)")
+        // создание содержимого профиля пользователя
+        let userProfileVC = UserProfileCollectionViewController(collectionViewLayout: UICollectionViewFlowLayout())
+        // пользователь приходит из searchVC в userPrifileVC
+        userProfileVC.userToLoadFromSearchVC = user
+        // переход view controller
+        navigationController?.pushViewController(userProfileVC, animated: true)
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
