@@ -10,6 +10,10 @@ import Firebase
 
 class UserProfileHeader: UICollectionViewCell {
     
+    // MARK: - Properties
+    
+    var delegate: UserProfileHeaderDelegate?
+    
     var user: User? {
         didSet {
             // конфигурация кнопки редактирования профиля
@@ -122,6 +126,23 @@ class UserProfileHeader: UICollectionViewCell {
                                  paddingTop: 12, paddingLeft: 5, paddingBottom: 0, paddingRight: 12,
                                  width: 0, height: 30)
         configureBottomToolBar()
+    }
+    
+    // MARK: - Handlers
+    @objc func handleFollowersTapped() {
+        delegate?.handleFollowersTapped(for: self)
+    }
+    
+    @objc func handleFollowingTapped() {
+        delegate?.handleFollowingTapped(for: self)
+    }
+    
+    @objc func handleEditProfileFollow() {
+        delegate?.handleEditFollowTapped(for: self)
+    }
+    
+    func setUserStats(for user: User?) {
+        delegate?.setUserStats(for: self)
     }
     
     // конфигурация нижней панели инструментов

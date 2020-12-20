@@ -11,7 +11,7 @@ import Firebase
 private let reuseIdentifier = "Cell"
 private let headerIdentifier = "UserProfileHeader"
 
-class UserProfileCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
+class UserProfileCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout, UserProfileHeaderDelegate {
 
     // MARK: - Свойства
     var currentUser: User?
@@ -54,6 +54,10 @@ class UserProfileCollectionViewController: UICollectionViewController, UICollect
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         // объявление header
         let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: headerIdentifier, for: indexPath) as! UserProfileHeader
+        
+        // установка delegate
+        header.delegate = self
+        
         // установка значений пользователя в заголовке
         if let user = self.currentUser {
             header.user = user
